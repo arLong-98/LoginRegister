@@ -74,7 +74,7 @@ nav ul li a:hover
 {    
     width: 90%;   
 }
-input[type="text"], input[type="password"]
+input[type="text"], input[type="password"], input[type="email"]
 {
     padding: 8px 5px;
     margin: 0 0 5px 5px;
@@ -94,7 +94,7 @@ input[type="submit"]
     cursor: pointer;
     margin-top: 4px;
 }
-input[type="text"]:focus , input[type="password"]:focus {
+input[type="text"]:focus , input[type="password"]:focus, input[type="email"]:focus {
     background-color:#fff;
 }
 input[type="submit"]:hover

@@ -7,12 +7,12 @@ function User(){};
 User.prototype = {
     //Find user data by id or username
 
-    find: function(user=null,callback)
+    find: function(user,callback)
     {
         //if user =number return field=id, if user=string return field=username.
         if(user)
         {
-            var field = 'username';
+            var field = 'email';
 
         }
 
@@ -31,7 +31,7 @@ User.prototype = {
 
     create :function(body,callback)
     {
-        this.find(body.username,function(user){
+        this.find(body.email,function(user){
             if(user){
                 callback(null);
             }
@@ -45,11 +45,13 @@ User.prototype = {
                     bind.push(body[prop]);
 
                 }
+                
+                let sql = `INSERT INTO users(fullname,password,college,email) VALUES(?,?,?,?)`;
+                pool.query(sql,bind,function(err,result){
 
-                let sql = `INSERT INTO users(username,fullname,password) VALUES(?,?,?)`;
-                pool.query(sql,bind,function(err,username){
+                    console.log(result);
                     if(err) throw err;
-                    callback(username);
+                    callback(body.email);
                 });
 
             }
@@ -57,9 +59,10 @@ User.prototype = {
         
     },
 
-    login : function(username,password,callback)
+    login : function(email,password,callback)
     {
-        this.find(username,function(user){
+        console.log(email);
+        this.find(email,function(user){
             if(user){
                 
                 if(bcrypt.compareSync(password,user.password)){

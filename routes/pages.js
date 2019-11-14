@@ -27,7 +27,7 @@ router.get('/',(req,res,next) => {
 
  //Post login data
  router.post('/login',(req,res,next)=>{
-     user.login(req.body.username,req.body.password,function(result){
+     user.login(req.body.email,req.body.password,function(result){
         if(result)
         {
             req.session.user = result;
@@ -36,7 +36,7 @@ router.get('/',(req,res,next) => {
             res.redirect('/home');
         }
         else{
-            res.send('Username/Password incorrect');
+            res.send('Incorrect Credentials');
         }
      });
  });
@@ -45,9 +45,10 @@ router.get('/',(req,res,next) => {
 
  router.post('/register',(req,res,next) => {
     let userInput ={
-        username: req.body.username,
         fullname: req.body.fullname,
-        password: req.body.password
+        password: req.body.password,
+        college:req.body.college,
+        email: req.body.email
     };
     user.create(userInput,function(lastId){
          if(lastId){
@@ -58,8 +59,7 @@ router.get('/',(req,res,next) => {
             })
         }
         else{
-            res.send("already created");
-            console.log('error creating a new user or...');
+            res.send("User already exists");
         }
     });
  });
